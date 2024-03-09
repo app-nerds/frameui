@@ -1,0 +1,38 @@
+:root {
+   --tagcloud-background-color: #f5f5f5;
+   --tagcloud-text-color: #333;
+   --tagcloud-border-radius: 0.5rem;
+}
+
+.tag-cloud-container {
+   display: flex;
+   gap: 1rem;
+   max-width: 100%;
+   flex-wrap: wrap;
+}
+
+.tag-cloud-tag {
+   display: flex;
+   align-items: center;
+   gap: 0.25rem;
+   cursor: pointer;
+   background-color: var(--tagcloud-background-color);
+   color: var(--tagcloud-text-color);
+   padding: 0.5rem;
+   border-radius: var(--tagcloud-border-radius);
+}
+
+.tag-cloud-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / 100%;
+  mask: no-repeat center / 100%;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+}
+
+.tag-cloud-icon-close {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z'/%3E%3C/svg%3E");
+}

@@ -1,0 +1,170 @@
+/*
+ * Copyright © 2022 App Nerds LLC
+ */
+:root {
+  /* Elements */
+  --header-height: 5rem;
+  --footer-height: 5rem;
+
+  /* Colors */
+  --footer-background-color: #eee;
+  --section-background-color: #ccc4;
+}
+
+/*
+ * Base
+ */
+html, body {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: var(--header-height) auto var(--footer-height);
+  grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+}
+
+@media only screen and (max-width: 1000px) {
+  html, body {
+    grid-template-columns: 4fr;
+    grid-template-areas:
+      "header"
+      "content"
+      "sidebar"
+      "footer";
+  }
+}
+
+/*
+ * Header
+ */
+header {
+	grid-area: header;
+	background-color: var(--primary-color);
+	padding: 1rem;
+	display: flex;
+	gap: 1rem;
+}
+
+header h1 {
+  color: white;
+  margin-top: 0;
+}
+
+member-login-bar:last-child {
+	margin-left: auto;
+	margin-right: 2rem;
+}
+
+/*
+ * Side navigation
+ */
+nav.sidenav {
+  grid-area: sidebar;
+  background-color: var(--secondary-color);
+  height: 100%;
+  overflow-y: auto;
+  color: var(--text-color);
+  box-shadow: 10px 0px 5px var(--shadow-color);
+  border-right: 1px solid var(--border-color);
+}
+
+nav.sidenav ul {
+  margin: 0;
+  list-style: none;
+}
+
+nav.sidenav ul li {
+  padding: 0.5rem;
+  display: inline-flex;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+nav.sidenav ul li.menu-header {
+  background-color: var(--primary-color);
+  opacity: 0.85;
+  color: white;
+}
+
+nav.sidenav ul li.menu-header:hover {
+  background-color: var(--primary-color);
+}
+
+nav.sidenav ul li:hover {
+  background-color: white;
+}
+
+nav.sidenav a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+nav.sidenav a:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
+/*
+ * Main
+ */
+main {
+  grid-area: content;
+}
+
+/*
+ * Footer
+ */
+footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  color: var(--text-color);
+  background-color: var(--footer-background-color);
+  border-top: 1px solid var(--border-color);
+}
+
+/*
+ * Buttons
+ */
+.delete-button {
+  background-color: #F44336;
+  color: white;
+}
+
+/*
+ * Filters
+ */
+section.filters {
+  background-color: var(--section-background-color);
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  margin: 1rem 0 1rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem 1rem;
+  opacity: 0.8;
+}
+
+section.filters input, section.filters textarea, section.filters select {
+	padding: 0.5rem 0.75rem;
+	font-size: 1rem;
+	border: 1px solid var(--border-color);
+	border-radius: 0.25rem;
+}
+
+section.filters input[type="checkbox"] {
+	width: auto;
+}
+
+section.filters input:focus, section.filters textarea:focus, section.filters select:focus {
+	border-color: var(--primary-color);
+	outline: 0;
+	box-shadow: 0 0 0 .20rem var(--primary-color);
+}
+
