@@ -42,6 +42,29 @@ and **frame.min.js** in your HTML like below (updating your pathing to match you
 </html>
 ```
 
+### Building
+To create minified versions of the Javascript and CSS files, execute the following.
+
+```bash
+$ make build
+```
+
+This will create the following:
+
+* A combined, minified Javascript file of all components in `frame.min.js`
+* A combined, minified CSS file for components in `components.min.css`
+* A minified base CSS file in `base.min.css`
+* A minifed CSS file with a small set of useful icons in `icons.min.css`
+* Two minified CSS files for building basic administrator applications in `admin-left-side-nav.min.css` and `admin-top-nav.min.css`
+* Folders with minified CSS and JS for each individual component
+
+While developing against this library, you can also run the following to have 
+builds create every time you change a file.
+
+```bash
+$ make watch
+```
+
 ## CSS
 
 Frame includes a pretty basic CSS starting template in **base.css** which covers
