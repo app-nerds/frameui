@@ -239,6 +239,10 @@ export class AjaxTable extends HTMLElement {
          result = await this._fetcher(this._page || 1);
       }
 
+      if (this._recordsKey in result) {
+         this._data = result[this._recordsKey];
+      }
+
       if (this._usePagingInfo() && this._responseHasPagingInfo(result)) {
          this._data = result[this._recordsKey];
          this._page = result[this._pageKey];
