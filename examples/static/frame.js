@@ -3555,7 +3555,6 @@ class AjaxTable extends HTMLElement {
       }
 
       if (this._usePagingInfo() && this._responseHasPagingInfo(result)) {
-         this._data = result[this._recordsKey];
          this._page = result[this._pageKey];
       }
 
