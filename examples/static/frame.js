@@ -3458,6 +3458,7 @@ class AjaxTable extends HTMLElement {
     * Public methods
     **********************************************************/
    reload() {
+      this._page = 1;
       this._fetch();
    }
 
