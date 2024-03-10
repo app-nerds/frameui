@@ -449,6 +449,25 @@
          </ul>
       </ajax-table>
 
+      <h3>Ajax Table - Using Grouping</h3>
+      <ajax-table 
+         id="projectsTable" 
+         fetch-on-load="true" 
+         url="/api/projects"
+         records-key="projects"
+         group-key="client"
+      >
+         <table>
+            <thead>
+               <tr>
+                  <th style="width: 20%">Client</th>
+                  <th style="width: 50%" data-key="title">Title</th>
+                  <th style="width: 30%" data-key="dueDate">Due Date</th>
+               </tr>
+            </thead>
+            <tbody></tbody>
+         </table>
+      </ajax-table>
    </main>
 
    <script type="module">
@@ -651,6 +670,11 @@
             return data;
          };
 
+         const projectsTable = document.querySelector("#projectsTable");
+
+         projectsTable.groupRenderer = (record) => {
+            return `* ${record.client}`;
+         };
       });
    </script>
 

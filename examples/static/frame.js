@@ -3404,6 +3404,7 @@ class AjaxTable extends HTMLElement {
       this._url = this.getAttribute("url");
       this._recordsKey = this.getAttribute("records-key");
       this._totalCountKey = this.getAttribute("total-count-key");
+      this._groupKey = this.getAttribute("group-key");
       this._pageKey = this.getAttribute("page-key");
       this._pageSize = (this.getAttribute("page-size")) ? parseInt(this.getAttribute("page-size")) : 10;
       this._previousButton = this.getAttribute("previous-button");
@@ -3416,6 +3417,7 @@ class AjaxTable extends HTMLElement {
       this._fetcher = null;
       this._columnMapping = [];
       this._noPagesText = "No pages";
+      this._groupRenderer = null;
    }
 
    /***********************************************************
@@ -3452,6 +3454,18 @@ class AjaxTable extends HTMLElement {
    set data(value) {
       this._data = value;
       this._fetch();
+   }
+
+   get groupRenderer() {
+      return this._groupRenderer;
+   }
+
+   set groupRenderer(value) {
+      if (typeof value !== "function") {
+         throw new Error("'groupRenderer' must be a function");
+      }
+
+      this._groupRenderer = value;
    }
 
    /***********************************************************
@@ -3493,7 +3507,7 @@ class AjaxTable extends HTMLElement {
             throw new Error("You must provide previousButton, nextButton, and pageInfo elements when paging keys are provided");
          }
 
-         this._noPagesText = this._pageInfo.innerHTML;
+         this._noPagesText = this._pageInfoEl.innerHTML;
          this._previousButtonEl.addEventListener("click", this._goToPreviousPage.bind(this));
          this._nextButtonEl.addEventListener("click", this._goToNextPage.bind(this));
       }
@@ -3505,8 +3519,16 @@ class AjaxTable extends HTMLElement {
        * setColumnMapping().
        */
       const thEls = this.querySelectorAll("table thead th");
+      let thIndex = -1;
 
       thEls.forEach((el) => {
+         thIndex++;
+
+         // Skip the first column if we are grouping.
+         if (thIndex === 0 && this._groupKey) {
+            return;
+         }
+
          const key = el.dataset.key;
 
          if (!key) {
@@ -3584,46 +3606,84 @@ class AjaxTable extends HTMLElement {
     * Draws table rows and columns from fetched data.
     */
    _renderTable() {
+      let currentGroup = {value: "", records: []};
+      let data = [];
+
       this._tbody.innerHTML = "";
 
-      this._data.forEach(record => {
-         const tr = document.createElement("tr");
-            
-         this._columnMapping.forEach((columnMapping, index) => {
-            const content = this._renderColumnData(columnMapping, record, index);
-            const td = this._createColumn(content);
+      /*
+       * First, assemble the data locally. If we are using a group key, this
+       * means we are grouping things by a key value. If not, we are just
+       * rendering straight rows without rowspans.
+       */
+      if (!this._groupKey) {
+         this._data.forEach(record => {
+            const tr = document.createElement("tr");
+               
+            this._columnMapping.forEach((columnMapping, index) => {
+               const td = this._renderColumn(columnMapping, record, index);
+               tr.appendChild(td);
+            });
 
-            tr.appendChild(td);
+            this._tbody.appendChild(tr);
+         });
+      } else {
+         this._data.forEach(record => {
+            const groupValue = record[this._groupKey];
+
+            if (groupValue !== currentGroup.value) {
+               if (currentGroup.records.length > 0) {
+                  data.push(currentGroup);
+               }
+
+               currentGroup = {records: [], value: groupValue};
+            }
+
+            currentGroup.records.push(record);
          });
 
-         this._tbody.appendChild(tr);
-      });
+         if (currentGroup.records.length > 0) {
+            data.push(currentGroup);
+         }
 
-      this._previousButtonEl.disabled = !this._hasPreviousPage();
-      this._nextButtonEl.disabled = !this._hasNextPage();
+         data.forEach(group => {
+            let first = true;
 
-      if (this._data.length <= 0) {
+            group.records.forEach(record => {
+               const tr = document.createElement("tr");
+
+               if (first) {
+                  first = false;
+
+                  const groupCol = Object.assign(document.createElement("td"), {
+                     rowSpan: group.records.length,
+                     innerHTML: (this._groupRenderer) ? this.groupRenderer(record, this._groupKey) : record[this._groupKey],
+                     classList: ["has-row-span"],
+                  });
+
+                  tr.appendChild(groupCol);
+               }
+
+               this._columnMapping.forEach((columnMapping, index) => {
+                  const td = this._renderColumn(columnMapping, record, index);
+                  tr.appendChild(td);
+               });
+
+               this._tbody.appendChild(tr);
+            });
+         });
+      }
+
+      if (this._usePagingInfo()) {
+         this._previousButtonEl.disabled = !this._hasPreviousPage();
+         this._nextButtonEl.disabled = !this._hasNextPage();
+      }
+
+      if (this._usePagingInfo() && this._data.length <= 0) {
          this._pageInfoEl.innerHTML = this._noPagesText;
-      } else {
+      } else if (this._usePagingInfo()) {
          this._pageInfoEl.innerHTML = `Page ${this._page} of ${this._calculateNumPages()}`;
       }
-   }
-
-   /*
-    * Creates a single column. If the content is a string the inner HTML
-    * is set, otherwise if it is an object, it is assumed to be an HTML
-    * element that can be appended.
-    */
-   _createColumn(content) {
-      const td = document.createElement("td");
-
-      if (typeof content === "string") {
-         td.innerHTML = content;
-      } else if (typeof content === "object") {
-         td.appendChild(content);
-      } 
-
-      return td;
    }
 
    /*
@@ -3631,14 +3691,24 @@ class AjaxTable extends HTMLElement {
     * the column mapping is a function, call it passing in the record.
     * A function should return either HTML string or an element.
     */
-   _renderColumnData(columnMapping, record, index) {
+   _renderColumn(columnMapping, record, index) {
+      let data = "";
+
       if (typeof columnMapping === "string") {
-         return record[columnMapping];
+         data = record[columnMapping];
       } else if (typeof columnMapping === "function") {
-         return columnMapping(record, index);
+         data = columnMapping(record, index);
       }
 
-      return "";
+      const td = document.createElement("td");
+
+      if (typeof data === "string") {
+         td.innerHTML = data;
+      } else if (typeof content === "object") {
+         td.appendChild(data);
+      } 
+
+      return td;
    }
 
    _usePagingInfo() {

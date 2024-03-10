@@ -10,6 +10,51 @@ def root():
 def serve_static(path):
 	return app.send_static_file(path)
 
+@app.route("/api/projects")
+def getProjects():
+    return jsonify({
+        "projects": [
+            {
+                "client": "Client 1",
+                "id": 1,
+                "title": "Project 2",
+                "dueDate": "2024-01-01"
+            },
+            {
+                "client": "Client 2",
+                "id": 2,
+                "title": "Project 1",
+                "dueDate": "2024-02-02"
+            },
+            {
+                "client": "Client 2",
+                "id": 3,
+                "title": "Project 3",
+                "dueDate": "2024-02-03"
+            },
+            {
+                "client": "Client 3",
+                "id": 4,
+                "title": "Project 4",
+                "dueDate": "2024-02-04"
+            },
+            {
+                "client": "Client 3",
+                "id": 6,
+                "title": "Project 5",
+                "dueDate": "2024-02-05"
+            },
+            {
+                "client": "Client 3",
+                "id": 6,
+                "title": "Project 6",
+                "dueDate": "2024-02-06"
+            },
+        ],
+        "totalCount": 6,
+        "page": 1
+    })
+
 @app.route("/api/contacts")
 def getContacts():
     page = int(request.args.get("page"))

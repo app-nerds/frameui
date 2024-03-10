@@ -260,6 +260,13 @@ tr:nth-child(even) {
 	background-color: var(--table-border);
 }
 
+td.has-row-span { 
+   background-color: white; 
+   font-weight: bold; 
+   vertical-align: top; 
+   font-size: larger;
+}
+
 /* Cards */
 .cards {
 	display: flex;

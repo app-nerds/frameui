@@ -118,6 +118,7 @@ export class AjaxTable extends HTMLElement {
     _url: string;
     _recordsKey: string;
     _totalCountKey: string;
+    _groupKey: string;
     _pageKey: string;
     _pageSize: number;
     _previousButton: string;
@@ -126,6 +127,7 @@ export class AjaxTable extends HTMLElement {
     _fetcher: any;
     _columnMapping: any[];
     _noPagesText: string;
+    _groupRenderer: any;
     set fetcher(value: any);
     /***********************************************************
      * Getters and setters
@@ -135,6 +137,8 @@ export class AjaxTable extends HTMLElement {
     get columnMapping(): any[];
     set data(value: any[]);
     get data(): any[];
+    set groupRenderer(value: any);
+    get groupRenderer(): any;
     /***********************************************************
      * Public methods
      **********************************************************/
@@ -148,8 +152,7 @@ export class AjaxTable extends HTMLElement {
     _getDataAndPagingInfo(): Promise<void>;
     _getDataFromURL(): Promise<any>;
     _renderTable(): void;
-    _createColumn(content: any): HTMLTableCellElement;
-    _renderColumnData(columnMapping: any, record: any, index: any): any;
+    _renderColumn(columnMapping: any, record: any, index: any): HTMLTableCellElement;
     _usePagingInfo(): string;
     _responseHasPagingInfo(response: any): boolean;
     _calculateNumPages(): number;
