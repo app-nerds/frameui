@@ -3405,6 +3405,7 @@ class AjaxTable extends HTMLElement {
       this._recordsKey = this.getAttribute("records-key");
       this._totalCountKey = this.getAttribute("total-count-key");
       this._pageKey = this.getAttribute("page-key");
+      this._pageSize = (this.getAttribute("page-size")) ? parseInt(this.getAttribute("page-size")) : 10;
       this._previousButton = this.getAttribute("previous-button");
       this._pageInfo = this.getAttribute("page-info");
       this._nextButton = this.getAttribute("next-button");
@@ -3648,13 +3649,11 @@ class AjaxTable extends HTMLElement {
    }
 
    _calculateNumPages() {
-      const pageSize = this._data.length;
-      return Math.round(this._totalCount / pageSize);
+      return Math.ceil(this._totalCount / this._pageSize);
    }
 
    _hasNextPage() {
-      const pageSize = this._data.length;
-      return (this._page - 1) * pageSize + pageSize < this._totalCount;
+      return (this._page - 1) * this._pageSize + this._pageSize < this._totalCount;
    }
 
    _hasPreviousPage() {

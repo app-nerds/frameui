@@ -81,6 +81,7 @@ export class AjaxTable extends HTMLElement {
     _recordsKey: string;
     _totalCountKey: string;
     _pageKey: string;
+    _pageSize: number;
     _previousButton: string;
     _pageInfo: string;
     _nextButton: string;
