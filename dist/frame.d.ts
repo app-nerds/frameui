@@ -805,6 +805,10 @@ export class PopupMenu extends HTMLElement {
     */
     toggle(e: Event): void;
     _hide(): void;
+    _positionPopup(): {
+        left: number;
+        top: number;
+    };
     _show(): void;
 }
 /**

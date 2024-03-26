@@ -91,7 +91,7 @@ export class PopupMenu extends HTMLElement {
 		this.classList.add("popup-menu-hidden");
 	}
 
-	_show() {
+   _positionPopup() {
 		let triggerRect = document
 			.querySelector(this._trigger)
 			.getBoundingClientRect();
@@ -100,13 +100,19 @@ export class PopupMenu extends HTMLElement {
 
 		let left = triggerRect.left;
 
-		if (left + thisRect.width > window.innerWidth) {
-			left = triggerRect.left - ((triggerRect.left + thisRect.width) - window.innerWidth) - buffer;
+		if (left + thisRect.width + buffer > window.innerWidth) {
+         left = triggerRect.left - triggerRect.width;
 		}
 
+      let top = triggerRect.y + triggerRect.height + buffer;
+
+      return { left, top };
+   }
+
+	_show() {
+      let {left, top} = this._positionPopup();
 		this.style.left = `${left}px`;
-		this.style.top =
-			"" + (triggerRect.y + triggerRect.height + buffer) + "px";
+		this.style.top = `${top}px`;
 
 		this.isVisible = true;
 		this.classList.remove("popup-menu-hidden");
