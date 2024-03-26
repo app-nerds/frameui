@@ -101,6 +101,8 @@ export class AjaxTable extends HTMLElement {
     get data(): any[];
     set groupRenderer(value: any);
     get groupRenderer(): any;
+    set page(value: number);
+    get page(): number;
     /***********************************************************
      * Public methods
      **********************************************************/

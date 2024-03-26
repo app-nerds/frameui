@@ -157,6 +157,15 @@ export class AjaxTable extends HTMLElement {
       this._groupRenderer = value;
    }
 
+   get page() {
+      return this._page;
+   }
+
+   set page(value) {
+      this._page = value;
+      this._fetch();
+   }
+
    /***********************************************************
     * Public methods
     **********************************************************/
