@@ -1342,7 +1342,8 @@ class PopupMenu extends HTMLElement {
 		let left = triggerRect.left;
 
 		if (left + thisRect.width + buffer > window.innerWidth) {
-         left = triggerRect.left - triggerRect.width;
+         // left = triggerRect.left - triggerRect.width;
+         left = (window.innerWidth - thisRect.width) - (window.innerWidth - triggerRect.right);
 		}
 
       let top = triggerRect.y + triggerRect.height + buffer;
