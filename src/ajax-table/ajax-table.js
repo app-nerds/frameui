@@ -174,6 +174,10 @@ export class AjaxTable extends HTMLElement {
       this._fetch();
    }
 
+   refresh() {
+      this._fetch();
+   }
+
    setColumnMapping(index, mapping) {
       this._columnMapping[index] = mapping;
    }

@@ -145,6 +145,7 @@ export class AjaxTable extends HTMLElement {
      * Public methods
      **********************************************************/
     reload(): void;
+    refresh(): void;
     setColumnMapping(index: any, mapping: any): void;
     /***********************************************************
      * Private methods
