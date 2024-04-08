@@ -396,7 +396,7 @@ export class AjaxTable extends HTMLElement {
    _renderColumn(columnMapping, record, index) {
       let data = "";
 
-      if (typeof columnMapping === "string") {
+      if (!(typeof columnMapping === "function")) {
          data = record[columnMapping];
       } else if (typeof columnMapping === "function") {
          data = columnMapping(record, index);
@@ -404,7 +404,7 @@ export class AjaxTable extends HTMLElement {
 
       const td = document.createElement("td");
 
-      if (typeof data === "string") {
+      if (!(typeof data === "function")) {
          td.innerHTML = data;
       } else if (typeof content === "object") {
          td.appendChild(data);
