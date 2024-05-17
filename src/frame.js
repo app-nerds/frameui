@@ -1,8 +1,17 @@
 import { AlertPosition, Alerter } from "./dialogs/alert.js";
 import { Confirmer } from "./dialogs/confirm.js";
 import { DateTimePicker } from "./datetime/date-time-picker.js";
-import { parseDateTime, formatDateTime, DateFormats } from "./datetime/date-time-service.js";
-import { PopupMenu, PopupMenuItem, showPopup, hidePopup } from "./menus/popup-menu.js";
+import {
+  parseDateTime,
+  formatDateTime,
+  DateFormats,
+} from "./datetime/date-time-service.js";
+import {
+  PopupMenu,
+  PopupMenuItem,
+  showPopup,
+  hidePopup,
+} from "./menus/popup-menu.js";
 import { Shim } from "./shim/shim.js";
 import { Spinner } from "./spinner/spinner.js";
 import { fetcher } from "./http/fetcher.js";
@@ -21,36 +30,40 @@ import ColorPicker from "./color-picker/color-picker.js";
 import { TagCloud } from "./tagcloud/tagcloud.js";
 import { AutoComplete } from "./autocomplete/autocomplete.js";
 import { AjaxTable } from "./ajax-table/ajax-table.js";
+import { Binding, Computed, applyBindings } from "./utilities/data-binding.js";
 
 export {
-	AlertPosition,
-	Alerter,
-	Confirmer,
-	DateFormats,
-	DateTimePicker,
-	formatDateTime,
-	PopupMenu,
-	PopupMenuItem,
-	showPopup,
-	hidePopup,
-	Shim,
-	Spinner,
-	fetcher,
-	GraphQL,
-	debounce,
-	objectToMap,
-	parseDateTime,
-	Prompter,
-	SessionService,
-	ErrTokenExpired,
-	application,
-	BaseView,
-	MemberLoginBar,
-	MemberService,
-	GoogleLoginForm,
-	MessageBar,
-	ColorPicker,
-   TagCloud,
-   AutoComplete,
-   AjaxTable,
+  AlertPosition,
+  Alerter,
+  Confirmer,
+  DateFormats,
+  DateTimePicker,
+  formatDateTime,
+  PopupMenu,
+  PopupMenuItem,
+  showPopup,
+  hidePopup,
+  Shim,
+  Spinner,
+  fetcher,
+  GraphQL,
+  debounce,
+  objectToMap,
+  parseDateTime,
+  Prompter,
+  SessionService,
+  ErrTokenExpired,
+  application,
+  BaseView,
+  MemberLoginBar,
+  MemberService,
+  GoogleLoginForm,
+  MessageBar,
+  ColorPicker,
+  TagCloud,
+  AutoComplete,
+  AjaxTable,
+  Binding,
+  Computed,
+  applyBindings,
 };

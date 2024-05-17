@@ -484,6 +484,19 @@ export class BaseView extends HTMLElement {
     _setDocumentTitle(): void;
 }
 /**
+ * Class to create an observable variable that notifies listeners on change.
+ * @class Binding
+ */
+export class Binding {
+    constructor(value: any);
+    _listeners: any[];
+    _value: any;
+    notify(): void;
+    subscribe(listener: any): void;
+    set value(newValue: any);
+    get value(): any;
+}
+/**
  * ColorPicker is a component used to display a color picker on the screen.
  * If the color the user wants is not there, they can type a hex code into the box to get
  * the color they want.
@@ -504,6 +517,14 @@ export class ColorPicker extends HTMLElement {
     _createInput(name: any, color: any): any;
     _onColorItemClicked(e: any): void;
     _clearGridSelectedClasses(): void;
+}
+/**
+ * Class to create an observable computed binding.
+ * @class Computed
+ * @extends Binding
+ */
+export class Computed extends Binding {
+    constructor(value: any, deps: array<Binding>);
 }
 /** @typedef {object & { callback: Function }} ConfirmOptions */
 /**
@@ -1035,6 +1056,12 @@ export class TagCloud extends HTMLElement {
  * @returns {Application}
  */
 export function application(targetElement: HTMLElement, routes: Array<Route>, pageNotFoundView?: BaseView): Application;
+/**
+ * Function to connect binding configs to DOM elements with the "data-bind"
+ * attribute.
+ * @param {object} container
+ */
+export function applyBindings(container: object): void;
 /**
  * Debounces a function call. This is useful for things like
  * search boxes where you don't want to make a call to the

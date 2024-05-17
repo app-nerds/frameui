@@ -3774,4 +3774,80 @@ if (!customElements.get("ajax-table")) {
    customElements.define("ajax-table", AjaxTable);
 }
 
-export { AjaxTable, AlertPosition, Alerter, AutoComplete, BaseView, ColorPicker, Confirmer, DateFormats, DateTimePicker, ErrTokenExpired, GoogleLoginForm, GraphQL, MemberLoginBar, MemberService, MessageBar, PopupMenu, PopupMenuItem, Prompter, SessionService, Shim, Spinner, TagCloud, application, debounce, fetcher, formatDateTime, hidePopup, objectToMap, parseDateTime, showPopup };
+/**
+ * Class to create an observable variable that notifies listeners on change.
+ * @class Binding
+ */
+class Binding {
+  constructor(value) {
+    this._listeners = [];
+    this._value = value;
+  }
+
+  notify() {
+    this._listeners.forEach((listener) => listener(this._value));
+  }
+
+  subscribe(listener) {
+    this._listeners.push(listener);
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(newValue) {
+    if (newValue !== this._value) {
+      this._value = newValue;
+      this.notify();
+    }
+  }
+}
+
+/**
+ * Class to create an observable computed binding.
+ * @class Computed
+ * @extends Binding
+ */
+class Computed extends Binding {
+  constructor(value, /** @type {array<Binding>} */ deps) {
+    super(value());
+
+    const listener = () => {
+      this._value = value();
+      this.notify();
+    };
+
+    deps.forEach((dep) => dep.subscribe(listener));
+  }
+
+  get value() {
+    return this._value;
+  }
+
+  set value(_) {
+    throw "cannot set value on computed property";
+  }
+}
+
+/**
+ * Function to connect binding configs to DOM elements with the "data-bind"
+ * attribute.
+ * @param {object} container
+ */
+function applyBindings(container) {
+  document.querySelectorAll("[data-bind]").forEach((el) => {
+    const observer = container[el.getAttribute("data-bind")];
+    bindValue(el, observer);
+  });
+}
+
+function bindValue(input, observable) {
+  input.value = observable.value;
+  observable.subscribe(() => (input.value = observable.value));
+  input.addEventListener("keyup", () => {
+    observable.value = input.value;
+  });
+}
+
+export { AjaxTable, AlertPosition, Alerter, AutoComplete, BaseView, Binding, ColorPicker, Computed, Confirmer, DateFormats, DateTimePicker, ErrTokenExpired, GoogleLoginForm, GraphQL, MemberLoginBar, MemberService, MessageBar, PopupMenu, PopupMenuItem, Prompter, SessionService, Shim, Spinner, TagCloud, application, applyBindings, debounce, fetcher, formatDateTime, hidePopup, objectToMap, parseDateTime, showPopup };
