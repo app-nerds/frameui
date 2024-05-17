@@ -3838,16 +3838,29 @@ class Computed extends Binding {
 function applyBindings(container) {
   document.querySelectorAll("[data-bind]").forEach((el) => {
     const observer = container[el.getAttribute("data-bind")];
-    bindValue(el, observer);
+
+    console.log(el.nodeName);
+
+    if (el.nodeName === "INPUT") {
+      bindInput(el, observer);
+      return;
+    }
+
+    bindNode(el, observer);
   });
 }
 
-function bindValue(input, observable) {
+function bindInput(input, observable) {
   input.value = observable.value;
   observable.subscribe(() => (input.value = observable.value));
   input.addEventListener("keyup", () => {
     observable.value = input.value;
   });
+}
+
+function bindNode(node, observable) {
+  node.innerText = observable.value;
+  observable.subscribe(() => (node.innerText = observable.value));
 }
 
 export { AjaxTable, AlertPosition, Alerter, AutoComplete, BaseView, Binding, ColorPicker, Computed, Confirmer, DateFormats, DateTimePicker, ErrTokenExpired, GoogleLoginForm, GraphQL, MemberLoginBar, MemberService, MessageBar, PopupMenu, PopupMenuItem, Prompter, SessionService, Shim, Spinner, TagCloud, application, applyBindings, debounce, fetcher, formatDateTime, hidePopup, objectToMap, parseDateTime, showPopup };

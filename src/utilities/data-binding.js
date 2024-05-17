@@ -62,14 +62,27 @@ export class Computed extends Binding {
 export function applyBindings(container) {
   document.querySelectorAll("[data-bind]").forEach((el) => {
     const observer = container[el.getAttribute("data-bind")];
-    bindValue(el, observer);
+
+    console.log(el.nodeName);
+
+    if (el.nodeName === "INPUT") {
+      bindInput(el, observer);
+      return;
+    }
+
+    bindNode(el, observer);
   });
 }
 
-function bindValue(input, observable) {
+function bindInput(input, observable) {
   input.value = observable.value;
   observable.subscribe(() => (input.value = observable.value));
   input.addEventListener("keyup", () => {
     observable.value = input.value;
   });
+}
+
+function bindNode(node, observable) {
+  node.innerText = observable.value;
+  observable.subscribe(() => (node.innerText = observable.value));
 }
