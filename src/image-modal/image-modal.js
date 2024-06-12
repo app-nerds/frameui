@@ -33,6 +33,7 @@ function showModal(src, alt, title) {
   });
 
   dialog.addEventListener("click", (e) => {
+    e.stopPropagation();
     dialog.remove();
   });
 
