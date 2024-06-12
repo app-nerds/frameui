@@ -1,7 +1,7 @@
 #!/bin/bash
 
 year=$(date +%Y)
-version=$(cat ../VERSION)
+version=$(cat ./VERSION)
 banner="/* Copyright © $year App Nerds LLC $version */"
 
 input="./src/$1"

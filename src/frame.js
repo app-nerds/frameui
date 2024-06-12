@@ -31,6 +31,7 @@ import { TagCloud } from "./tagcloud/tagcloud.js";
 import { AutoComplete } from "./autocomplete/autocomplete.js";
 import { AjaxTable } from "./ajax-table/ajax-table.js";
 import { Binding, Computed, applyBindings } from "./utilities/data-binding.js";
+import { attachImageModals } from "./image-modal/image-modal.js";
 
 export {
   AlertPosition,
@@ -66,4 +67,5 @@ export {
   Binding,
   Computed,
   applyBindings,
+  attachImageModals,
 };

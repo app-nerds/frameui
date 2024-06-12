@@ -598,3 +598,26 @@ Frame UI provides a very basic 2-way data binding utility. This allows you to bu
   applyBindings(bindings);
 </script>
 ```
+
+### Image Modal
+
+Frame UI provides a simple image modal designed to show a larger preview of an image when it is clicked on.
+
+![Image modal](./screenshots/image-modal.png)
+
+To use it simply define images in your markup and use the following method to attach the handler. By default the **src** attribute is used in the modal. If the attribute **data-largeimageurl** is provided, that will be used instead. Here is an example:
+
+```html
+<img class="myimages" src="image1.jpg" />
+<img
+  class="myimages"
+  src="image2.jpg"
+  data-largeimageurl="image2.jpg?fullSize=true"
+/>
+
+<script type="module">
+  import { attachImageModals } from "/static/frame.js";
+
+  attachImageModals(".myimages");
+</script>
+```

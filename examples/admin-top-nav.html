@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -15,10 +15,14 @@
 	<header>
 		<h1>Admin Top</h1>
 
-		<nav class="sidenav">
+		<nav>
 			<ul>
-				<li><a href="#"><i class="icon--mdi icon--mdi--home"></i> Home</a></li>
-				<li><a href="#"><i class="icon--mdi icon--mdi--cog"></i> Settings</a></li>
+				<li>
+					<a href="#"><i class="icon--mdi icon--mdi--home"></i> Home</a>
+				</li>
+				<li>
+					<a href="#"><i class="icon--mdi icon--mdi--cog"></i> Settings</a>
+				</li>
 				<li><a href="#">Link 3</a></li>
 				<li><a href="#">Link 4</a></li>
 			</ul>
@@ -32,12 +36,12 @@
 
 		<div class="action-bar">
 			<button><i class="icon--mdi icon--mdi--arrow-left"></i> Back</button>
-			<button class="action-button"><i class="icon--mdi icon--mdi--plus"></i> Add</button>
+			<button class="action-button">
+				<i class="icon--mdi icon--mdi--plus"></i> Add
+			</button>
 		</div>
 
-		<p>
-			This page showcases the Admin Left Navigation template and CSS.
-		</p>
+		<p>This page showcases the Admin Left Navigation template and CSS.</p>
 
 		<section class="filters">
 			<label for="user">User</label>
@@ -54,7 +58,9 @@
 		</section>
 
 		<table>
-			<caption>Results Table</caption>
+			<caption>
+				Results Table
+			</caption>
 			<thead>
 				<tr>
 					<th scope="col">Col 1</th>
@@ -79,9 +85,7 @@
 		<form>
 			<label for="first">First</label>
 			<input type="text" id="first" />
-			<small>
-				This is additional information for this form field
-			</small>
+			<small> This is additional information for this form field </small>
 
 			<label for="second">Second</label>
 			<select id="second">
@@ -99,20 +103,20 @@
 			</label>
 
 			<footer>
-				<button type="button" id="cancel"><i class="icon--mdi icon--mdi--arrow-left" alt="Left arrow"></i>
-					Cancel</button>
-				<button type="button" class="action-button" id="action">Action!</button>
+				<button type="button" id="cancel">
+					<i class="icon--mdi icon--mdi--arrow-left" alt="Left arrow"></i>
+					Cancel
+				</button>
+				<button type="button" class="action-button" id="action">
+					Action!
+				</button>
 			</footer>
 		</form>
-
 	</main>
 
 	<footer>
-		<p>
-			&copy; 2023 App Nerds LLC
-		</p>
+		<p>&copy; 2023 App Nerds LLC</p>
 	</footer>
-
 
 	<script type="module">
 		import frame from "/static/frame.js";
@@ -126,14 +130,15 @@
 				alerter.info("Canceled!");
 			});
 
-			document.querySelector("#action").addEventListener("click", async () => {
-				const result = await confirmer.yesNo("Are you sure?");
+			document
+				.querySelector("#action")
+				.addEventListener("click", async () => {
+					const result = await confirmer.yesNo("Are you sure?");
 
-				alerter.success(`You said ${result ? "yes" : "no"}`);
-			});
+					alerter.success(`You said ${result ? "yes" : "no"}`);
+				});
 		});
 	</script>
-
 </body>
 
 </html>

@@ -9,9 +9,10 @@ dialogs/alert.min.css,src/dialogs/alert.css
 dialogs/confirm.min.css,src/dialogs/confirm.css
 dialogs/prompt.min.css,src/dialogs/prompt.css
 dialogs/dialogs.min.css,src/dialogs/alert.css src/dialogs/confirm.css src/dialogs/prompt.css
+image-modal/image-modal.min.css,src/image-modal/image-modal.css
 menus/popup-menu.min.css,src/menus/popup-menu.css
 message-bar/message-bar.min.css,src/message-bar/message-bar.css
 shim/shim.min.css,src/shim/shim.css
 spinner/spinner.min.css,src/spinner/spinner.css
 tagcloud/tagcloud.min.css,src/tagcloud/tagcloud.css
-components.min.css,src/color-picker/color-picker.css src/datetime/date-time-picker.css src/dialogs/alert.css src/dialogs/confirm.css src/dialogs/prompt.css src/menus/popup-menu.css src/message-bar/message-bar.css src/shim/shim.css src/spinner/spinner.css src/tagcloud/tagcloud.css src/autocomplete/autocomplete.css
+components.min.css,src/color-picker/color-picker.css src/datetime/date-time-picker.css src/dialogs/alert.css src/dialogs/confirm.css src/image-modal/image-modal.css src/dialogs/prompt.css src/menus/popup-menu.css src/message-bar/message-bar.css src/shim/shim.css src/spinner/spinner.css src/tagcloud/tagcloud.css src/autocomplete/autocomplete.css
