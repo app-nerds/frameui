@@ -15,7 +15,6 @@ export function attachImageModals(elementSelector) {
   const els = document.querySelectorAll(elementSelector);
 
   els.forEach((el) => {
-    console.log(el);
     let src = el.src;
     let alt = el.alt;
     let title = el.title;
