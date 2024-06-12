@@ -32,10 +32,17 @@ function showModal(src, alt, title) {
     className: "image-modal",
   });
 
+  dialog.addEventListener("click", (e) => {
+    dialog.remove();
+  });
+
   const image = Object.assign(document.createElement("img"), {
     src: src,
     alt: alt,
     title: title,
+    onclick: (e) => {
+      e.stopPropagation();
+    },
   });
 
   const close = Object.assign(document.createElement("i"), {
