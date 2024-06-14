@@ -3779,17 +3779,26 @@ if (!customElements.get("ajax-table")) {
  * @class Binding
  */
 class Binding {
-  constructor(value) {
+  constructor(value, selectedIndex = 0) {
     this._listeners = [];
     this._value = value;
+    this._selectedIndex = selectedIndex;
   }
 
   notify() {
-    this._listeners.forEach((listener) => listener(this._value));
+    this._listeners.forEach((listener) =>
+      listener(this._value, this._selectedIndex),
+    );
   }
 
   subscribe(listener) {
     this._listeners.push(listener);
+  }
+
+  clear(newValue = "", newSelectedIndex = 0) {
+    this._value = newValue;
+    this._selectedIndex = newSelectedIndex;
+    this.notify();
   }
 
   get value() {
@@ -3799,6 +3808,17 @@ class Binding {
   set value(newValue) {
     if (newValue !== this._value) {
       this._value = newValue;
+      this.notify();
+    }
+  }
+
+  get selectedIndex() {
+    return this._selectedIndex;
+  }
+
+  set selectedIndex(newIndex) {
+    if (newIndex !== this._selectedIndex) {
+      this._selectedIndex = newIndex;
       this.notify();
     }
   }
@@ -3839,10 +3859,13 @@ function applyBindings(container) {
   document.querySelectorAll("[data-bind]").forEach((el) => {
     const observer = container[el.getAttribute("data-bind")];
 
-    console.log(el.nodeName);
-
     if (el.nodeName === "INPUT") {
       bindInput(el, observer);
+      return;
+    }
+
+    if (el.nodeName === "SELECT") {
+      bindSelect(el, observer);
       return;
     }
 
@@ -3855,6 +3878,17 @@ function bindInput(input, observable) {
   observable.subscribe(() => (input.value = observable.value));
   input.addEventListener("keyup", () => {
     observable.value = input.value;
+  });
+}
+
+function bindSelect(input, observable) {
+  input.selectedIndex = observable.selectedIndex;
+  observable.subscribe(() => () => {
+    input.selectedIndex = observable.selectedIndex;
+  });
+  input.addEventListener("change", () => {
+    observable.selectedIndex = input.selectedIndex;
+    observable.value = input.options[input.selectedIndex].value;
   });
 }
 

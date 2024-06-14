@@ -17,4 +17,4 @@ shim/shim.js shim/shim.min.js
 spa/spa.js spa/spa.min.js
 spinner/spinner.js spinner/spinner.min.js
 tagcloud/tagcloud.js tagcloud/tagcloud.min.js
-utilities/index.js utilities/index.min.js
+utilities/utilities.js utilities/utilities.min.js

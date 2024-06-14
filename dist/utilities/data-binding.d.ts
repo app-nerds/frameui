@@ -9,13 +9,17 @@ export function applyBindings(container: object): void;
  * @class Binding
  */
 export class Binding {
-    constructor(value: any);
+    constructor(value: any, selectedIndex?: number);
     _listeners: any[];
     _value: any;
+    _selectedIndex: number;
     notify(): void;
     subscribe(listener: any): void;
+    clear(newValue?: string, newSelectedIndex?: number): void;
     set value(newValue: any);
     get value(): any;
+    set selectedIndex(newIndex: number);
+    get selectedIndex(): number;
 }
 /**
  * Class to create an observable computed binding.

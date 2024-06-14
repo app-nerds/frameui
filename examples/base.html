@@ -451,9 +451,16 @@
 
       <label for="lastName">Last Name</label>
       <input type="text" id="lastName" data-bind="lastName" />
+
+      <label for="city">City</label>
+      <select id="city" data-bind="city">
+        <option value="Austin">Austin</option>
+        <option value="Dallas">Dallas</option>
+        <option value="Houston">Houston</option>
+      </select>
     </form>
 
-    <p data-bind="fullName"></p>
+    <p data-bind="fullNameAndCity"></p>
 
     <h3>Image Modal</h3>
     <img src="https://placehold.co/300" data-largeimageurl="https://placehold.co/600" class="myimages" />
@@ -704,11 +711,13 @@
       const bindings = {
         firstName: new Binding("Adam"),
         lastName: new Binding("Presley"),
+        city: new Binding("Austin"),
       };
 
-      bindings.fullName = new Computed(
-        () => `${bindings.firstName.value} ${bindings.lastName.value}`,
-        [bindings.firstName, bindings.lastName],
+      bindings.fullNameAndCity = new Computed(
+        () =>
+          `${bindings.firstName.value} ${bindings.lastName.value} from ${bindings.city.value}`,
+        [bindings.firstName, bindings.lastName, bindings.city],
       );
 
       applyBindings(bindings);
