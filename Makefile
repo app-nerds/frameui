@@ -14,6 +14,15 @@ setup: ## Sets up dependencies
 run: ## Runs the example
 	@cd examples && python3 -m http.server 8000
 
+run-base: ## Runs the base example
+	cd examples && ../.venv/bin/python3 ./serve-base.py
+
+run-admin-left: ## Runs the example for admin-left
+	cd examples && ../.venv/bin/python3 ./serve-admin-left.py
+
+run-admin-top: ## Runs the example for admin-top
+	cd examples && ../.venv/bin/python3 ./serve-admin-top.py
+
 watch: ## Watches for changes and rebuilds
 	watchman-make -p 'src/**/*.css' 'src/**/*.js' -t build
 

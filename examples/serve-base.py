@@ -1,10 +1,10 @@
 from flask import Flask, send_from_directory, request, jsonify
 
-app = Flask(__name__, static_folder="examples/static")
+app = Flask(__name__, static_folder="static")
 
 @app.route("/")
 def root():
-	return send_from_directory("examples", "base.html")
+	return send_from_directory("./", "base.html")
 
 @app.route("/static/<path:path>")
 def serve_static(path):

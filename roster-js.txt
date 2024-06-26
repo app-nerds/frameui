@@ -18,3 +18,5 @@ spa/spa.js spa/spa.min.js
 spinner/spinner.js spinner/spinner.min.js
 tagcloud/tagcloud.js tagcloud/tagcloud.min.js
 utilities/utilities.js utilities/utilities.min.js
+utilities/data-binding.js utilities/data-binding.min.js
+utilities/debounce.js utilities/debounce.min.js

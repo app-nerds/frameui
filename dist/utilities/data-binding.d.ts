@@ -1,25 +1,28 @@
 /**
  * Function to connect binding configs to DOM elements with the "data-bind"
  * attribute.
- * @param {object} container
+ * @param {object} Object which contains target data binding variables.
+ * @param {string} CSS selector determines which elements to apply to. Defaults to "data-bind"
  */
-export function applyBindings(container: object): void;
+export function applyBindings(container: any, options?: {
+    selector: string;
+}): void;
 /**
  * Class to create an observable variable that notifies listeners on change.
  * @class Binding
  */
 export class Binding {
-    constructor(value: any, selectedIndex?: number);
+    constructor(name: string, value: any);
+    _name: string;
     _listeners: any[];
     _value: any;
-    _selectedIndex: number;
     notify(): void;
-    subscribe(listener: any): void;
-    clear(newValue?: string, newSelectedIndex?: number): void;
+    subscribe(listener: () => void): void;
+    subscriberCount(): number;
+    clear(newValue?: any): void;
+    get name(): string;
     set value(newValue: any);
     get value(): any;
-    set selectedIndex(newIndex: number);
-    get selectedIndex(): number;
 }
 /**
  * Class to create an observable computed binding.
@@ -27,5 +30,5 @@ export class Binding {
  * @extends Binding
  */
 export class Computed extends Binding {
-    constructor(value: any, deps: array<Binding>);
+    constructor(value: any, deps?: array<Binding>);
 }

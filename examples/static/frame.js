@@ -3779,46 +3779,71 @@ if (!customElements.get("ajax-table")) {
  * @class Binding
  */
 class Binding {
-  constructor(value, selectedIndex = 0) {
+  // constructor(name, value, selectedIndex = 0) {
+  constructor(
+    /**
+     * A name to identify this binding.
+     * @type {string}
+     */
+    name,
+    /**
+     * Initial value for this binding. This can be anything.
+     * @type {any}
+     */
+    value,
+  ) {
+    this._name = name;
     this._listeners = [];
     this._value = value;
-    this._selectedIndex = selectedIndex;
   }
 
   notify() {
-    this._listeners.forEach((listener) =>
-      listener(this._value, this._selectedIndex),
-    );
+    this._listeners.forEach((listener) => listener(this._name, this._value));
   }
 
-  subscribe(listener) {
+  subscribe(
+    /**
+     * Function called when this binding changes.
+     * @type {() => void}
+     */
+    listener,
+  ) {
     this._listeners.push(listener);
   }
 
-  clear(newValue = "", newSelectedIndex = 0) {
+  subscriberCount() {
+    return this._listeners.length;
+  }
+
+  // clear(newValue = "", newSelectedIndex = 0) {
+  clear(
+    /**
+     * New value to set. optional.
+     * @type {any} [""]
+     */
+    newValue = "",
+  ) {
     this._value = newValue;
-    this._selectedIndex = newSelectedIndex;
     this.notify();
+  }
+
+  get name() {
+    return this._name;
   }
 
   get value() {
     return this._value;
   }
 
-  set value(newValue) {
+  set value(
+    /**
+     * New value to set
+     * @type {any}
+     */
+    newValue,
+  ) {
     if (newValue !== this._value) {
       this._value = newValue;
-      this.notify();
-    }
-  }
-
-  get selectedIndex() {
-    return this._selectedIndex;
-  }
-
-  set selectedIndex(newIndex) {
-    if (newIndex !== this._selectedIndex) {
-      this._selectedIndex = newIndex;
       this.notify();
     }
   }
@@ -3830,8 +3855,8 @@ class Binding {
  * @extends Binding
  */
 class Computed extends Binding {
-  constructor(value, /** @type {array<Binding>} */ deps) {
-    super(value());
+  constructor(value, /** @type {array<Binding>} */ deps = []) {
+    super("computed", value());
 
     const listener = () => {
       this._value = value();
@@ -3853,11 +3878,17 @@ class Computed extends Binding {
 /**
  * Function to connect binding configs to DOM elements with the "data-bind"
  * attribute.
- * @param {object} container
+ * @param {object} Object which contains target data binding variables.
+ * @param {string} CSS selector determines which elements to apply to. Defaults to "data-bind"
  */
-function applyBindings(container) {
-  document.querySelectorAll("[data-bind]").forEach((el) => {
-    const observer = container[el.getAttribute("data-bind")];
+function applyBindings(container, options = { selector: "data-bind" }) {
+  options = {
+    selector: "data-bind",
+    ...options,
+  };
+
+  document.querySelectorAll(`[${options.selector}]`).forEach((el) => {
+    const observer = container[el.getAttribute(options.selector)];
 
     if (el.nodeName === "INPUT") {
       bindInput(el, observer);
@@ -3871,24 +3902,54 @@ function applyBindings(container) {
 
     bindNode(el, observer);
   });
+
+  /*
+   * Add a method to the container to set state and notify all.
+   */
+  // container.setState = (newState = {}) => {
+  //   for (const key in container) {
+  //     if (key in newState) {
+  //       container[key].value = newState[key];
+  //     }
+  //   }
+  // };
+  //
+  // container.notifyAll = () => {
+  //   for (const key in container) {
+  //     if ("notify" in container[key]) {
+  //       console.log(`${container[key].name} has notify.`);
+  //       container[key].notify();
+  //     }
+  //   }
+  // };
 }
 
 function bindInput(input, observable) {
   input.value = observable.value;
-  observable.subscribe(() => (input.value = observable.value));
+
+  if (observable.subscriberCount() === 0) {
+    observable.subscribe(() => (input.value = observable.value));
+  }
+
   input.addEventListener("keyup", () => {
     observable.value = input.value;
   });
 }
 
 function bindSelect(input, observable) {
-  input.selectedIndex = observable.selectedIndex;
-  observable.subscribe(() => () => {
-    input.selectedIndex = observable.selectedIndex;
-  });
-  input.addEventListener("change", () => {
-    observable.selectedIndex = input.selectedIndex;
-    observable.value = input.options[input.selectedIndex].value;
+  input.selectedIndex = observable.value;
+
+  if (observable.subscriberCount() === 0) {
+    observable.subscribe(() => {
+      console.log(
+        `observable for ${observable.name} changed to '${observable.value}'`,
+      );
+      input.selectedIndex = observable.value;
+    });
+  }
+
+  input.addEventListener("change", (e) => {
+    observable.value = e.target.selectedIndex;
   });
 }
 

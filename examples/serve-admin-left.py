@@ -1,10 +1,10 @@
 from flask import Flask, send_from_directory
 
-app = Flask(__name__, static_folder="dist")
+app = Flask(__name__, static_folder="static")
 
 @app.route("/")
 def root():
-	return send_from_directory("examples", "admin-top-nav.html")
+	return send_from_directory("./", "admin-left-side.html")
 
 @app.route("/static/<path:path>")
 def serve_static(path):

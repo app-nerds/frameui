@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -31,9 +31,7 @@
 	<main>
 		<h2>Dashboard</h2>
 
-		<p>
-			This page showcases the Admin Left Navigation template and CSS.
-		</p>
+		<p>This page showcases the Admin Left Navigation template and CSS.</p>
 
 		<section class="filters">
 			<label for="user">User</label>
@@ -50,7 +48,9 @@
 		</section>
 
 		<table>
-			<caption>Results Table</caption>
+			<caption>
+				Results Table
+			</caption>
 			<thead>
 				<tr>
 					<th scope="col">Col 1</th>
@@ -75,9 +75,7 @@
 		<form>
 			<label for="first">First</label>
 			<input type="text" id="first" />
-			<small>
-				This is additional information for this form field
-			</small>
+			<small> This is additional information for this form field </small>
 
 			<label for="second">Second</label>
 			<select id="second">
@@ -95,41 +93,42 @@
 			</label>
 
 			<footer>
-				<button type="button" id="cancel"><i class="icon--mdi icon--mdi--arrow-left" alt="Left arrow"></i>
-					Cancel</button>
-				<button type="button" class="action-button" id="action">Action!</button>
+				<button type="button" id="cancel">
+					<i class="icon--mdi icon--mdi--arrow-left" alt="Left arrow"></i>
+					Cancel
+				</button>
+				<button type="button" class="action-button" id="action">
+					Action!
+				</button>
 			</footer>
 		</form>
-
 	</main>
 
 	<footer>
-		<p>
-			&copy; 2023 App Nerds LLC
-		</p>
+		<p>&copy; 2023 App Nerds LLC</p>
 	</footer>
 
-
 	<script type="module">
-		import frame from "/static/frame.js";
+		import {Alerter, Confirmer, Spinner} from "/static/frame.js";
 
 		document.addEventListener("DOMContentLoaded", () => {
-			const alerter = frame.alert();
-			const confirmer = frame.confirm();
-			const spinnerer = frame.spinner();
+			const alerter = new Alerter();
+			const confirmer = new Confirmer();
+			const spinnerer = new Spinner();
 
 			document.querySelector("#cancel").addEventListener("click", () => {
 				alerter.info("Canceled!");
 			});
 
-			document.querySelector("#action").addEventListener("click", async () => {
-				const result = await confirmer.yesNo("Are you sure?");
+			document
+				.querySelector("#action")
+				.addEventListener("click", async () => {
+					const result = await confirmer.yesNo("Are you sure?");
 
-				alerter.success(`You said ${result ? "yes" : "no"}`);
-			});
+					alerter.success(`You said ${result ? "yes" : "no"}`);
+				});
 		});
 	</script>
-
 </body>
 
 </html>

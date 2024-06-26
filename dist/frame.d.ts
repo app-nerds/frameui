@@ -488,17 +488,17 @@ export class BaseView extends HTMLElement {
  * @class Binding
  */
 export class Binding {
-    constructor(value: any, selectedIndex?: number);
+    constructor(name: string, value: any);
+    _name: string;
     _listeners: any[];
     _value: any;
-    _selectedIndex: number;
     notify(): void;
-    subscribe(listener: any): void;
-    clear(newValue?: string, newSelectedIndex?: number): void;
+    subscribe(listener: () => void): void;
+    subscriberCount(): number;
+    clear(newValue?: any): void;
+    get name(): string;
     set value(newValue: any);
     get value(): any;
-    set selectedIndex(newIndex: number);
-    get selectedIndex(): number;
 }
 /**
  * ColorPicker is a component used to display a color picker on the screen.
@@ -528,7 +528,7 @@ export class ColorPicker extends HTMLElement {
  * @extends Binding
  */
 export class Computed extends Binding {
-    constructor(value: any, deps: array<Binding>);
+    constructor(value: any, deps?: array<Binding>);
 }
 /** @typedef {object & { callback: Function }} ConfirmOptions */
 /**
@@ -1063,9 +1063,12 @@ export function application(targetElement: HTMLElement, routes: Array<Route>, pa
 /**
  * Function to connect binding configs to DOM elements with the "data-bind"
  * attribute.
- * @param {object} container
+ * @param {object} Object which contains target data binding variables.
+ * @param {string} CSS selector determines which elements to apply to. Defaults to "data-bind"
  */
-export function applyBindings(container: object): void;
+export function applyBindings(container: any, options?: {
+    selector: string;
+}): void;
 /**
  * attachImageModals searches for images with the provided selector and
  * attaches a click event to load a modal display of the larger image.

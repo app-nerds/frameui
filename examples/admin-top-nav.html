@@ -119,12 +119,12 @@
 	</footer>
 
 	<script type="module">
-		import frame from "/static/frame.js";
+		import {Alerter, Confirmer, Spinner} from "/static/frame.js";
 
 		document.addEventListener("DOMContentLoaded", () => {
-			const alerter = frame.alert();
-			const confirmer = frame.confirm();
-			const spinnerer = frame.spinner();
+			const alerter = new Alerter();
+			const confirmer = new Confirmer();
+			const spinnerer = new Spinner();
 
 			document.querySelector("#cancel").addEventListener("click", () => {
 				alerter.info("Canceled!");
