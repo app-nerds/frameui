@@ -359,7 +359,16 @@
       submission-style="delimited" delimiter=";"></auto-complete>
 
     <h3>Multi-select</h3>
-    <multi-select></multi-select>
+    <multi-select field-name="exampleMultiselect">
+      <ul slot="items">
+        <li>
+          <label> <input type="checkbox" value="1" /> First </label>
+        </li>
+        <li>
+          <label> <input type="checkbox" value="2" /> Second </label>
+        </li>
+      </ul>
+    </multi-select>
 
     <h3>Ajax Table - Using URL</h3>
     <ajax-table id="contactsTable1" fetch-on-load="true" url="/api/contacts" records-key="contacts"

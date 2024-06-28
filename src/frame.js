@@ -32,6 +32,7 @@ import { AutoComplete } from "./autocomplete/autocomplete.js";
 import { AjaxTable } from "./ajax-table/ajax-table.js";
 import { Binding, Computed, applyBindings } from "./utilities/data-binding.js";
 import { attachImageModals } from "./image-modal/image-modal.js";
+import MultiSelect from "./multiselect/multiselect.js";
 
 export {
   AlertPosition,
@@ -68,4 +69,5 @@ export {
   Computed,
   applyBindings,
   attachImageModals,
+  MultiSelect,
 };

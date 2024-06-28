@@ -34,10 +34,11 @@ clean: ## Removes all files from the dist folder
 	@rm -rf dist/*
 
 build-library: build-css
-	@parallel --colsep ' ' -a ./roster-js.txt ./minifyjs.sh {1} {2}
+	parallel --colsep ' ' -a ./roster-js.txt ./minifyjs.sh {1} {2}
 
-build-css: build-type-files
-	@parallel --colsep ',' -a ./roster-css.txt ./minifycss.sh {1} {2}
+# build-css: build-type-files
+build-css: setup-directories
+	parallel --colsep ',' -a ./roster-css.txt ./minifycss.sh {1} {2}
 
 build-type-files: setup-directories
 	npx -p typescript tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist
@@ -52,11 +53,13 @@ setup-directories:
 	@mkdir -p dist/shim
 	@mkdir -p dist/spinner
 	@mkdir -p dist/tagcloud
+	@mkdir -p dist/multiselect
+	@mkdir -p dist/image-modal
 
 copy:
 	@cp dist/*.min.css examples/static
 	@cp dist/frame.js examples/static/frame.js
 
 clean-dist-after:
-	npx -p typescript tsc dist/frame.js --declaration --allowJs --emitDeclarationOnly --outDir dist
+	# npx -p typescript tsc dist/frame.js --declaration --allowJs --emitDeclarationOnly --outDir dist
 	cd dist && find . -type f -name "*.js" ! -name "*.min.js" -exec rm -f {} +

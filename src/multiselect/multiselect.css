@@ -1,0 +1,18 @@
+ul[slot="items"] {
+  list-style: none;
+  margin: 0.8rem;
+  line-height: 1.5rem;
+}
+
+ul[slot="items"] li {
+  padding: 0.5rem 0;
+}
+
+ul[slot="items"] li:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+ul[slot="items"] li label {
+  margin: 0;
+}
