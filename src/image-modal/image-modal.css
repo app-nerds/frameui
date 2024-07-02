@@ -34,8 +34,9 @@
 }
 
 .image-modal img {
-  width: 50%;
+  max-width: 100%;
   object-fit: contain;
+  max-height: 100vh;
 }
 
 .image-modal .close {

@@ -394,6 +394,8 @@ td.has-row-span {
 	padding: 0.5rem;
 	display: flex;
 	gap: 0.5rem;
+	position: relative;
+	background-color: inherit;
 }
 
 .cards>article>a.action-button {
