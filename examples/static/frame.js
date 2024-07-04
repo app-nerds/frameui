@@ -4066,6 +4066,8 @@ class MultiSelect extends HTMLElement {
         z-index: 99;
         width: ${this._popupWidth};
         padding-top: 0.8rem;
+        max-height: 15rem;
+        overflow-y: scroll;
       }
 
       .multi-select-container a {
