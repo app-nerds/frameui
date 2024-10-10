@@ -187,6 +187,18 @@ a heading. This will likely be a **H3** or lower (never an H1 for sure). The bod
 can be whatever content you want. Finally, add a footer with buttons to take
 actions if you wish.
 
+### Pills
+
+Pills are a visual way to tag or label something.
+
+```html
+<span class="pill default">Default and Boring</span>
+<span class="pill info">Information</span>
+<span class="pill warning">Warning</span>
+<span class="pill danger">Danger!</span>
+<span class="pill success">Success</span>
+```
+
 ## Icons
 
 Icons make use of a library provided by <a href="https://icon-sets.iconify.design/mdi/">Iconify</a>.
